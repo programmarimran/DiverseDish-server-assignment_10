@@ -38,18 +38,39 @@ async function run() {
       res.send(result);
     });
     app.post("/recipes", async (req, res) => {
-      const newProducts = req.body;
-      const result = await productCollection.insertOne(newProducts);
+      const data = req.body;
+      let result;
+      if (Array.isArray(data)) {
+        result = await productCollection.insertMany(data);
+      } else {
+        result = await productCollection.insertOne(data);
+      }
       res.send(result);
     });
+
     app.put("/recipes/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
       const updateDoc = {
-        $set:req.body
+        $set: req.body,
       };
-      const result=await productCollection.updateOne(filter,updateDoc,options)
+      const result = await productCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+    app.patch("/recipes/:id", async (req, res) => {
+      const id = req.params.id;
+      const { likeCount } = req.body;
+      // console.log(likeCount)
+      const filter = { _id: new ObjectId(id) };
+      const updateDoc = {
+        $set:{likeCount:likeCount+1}
+      };
+      const result = await productCollection.updateOne(filter,updateDoc);
       res.send(result)
     });
     app.delete("/recipes/:id", async (req, res) => {
