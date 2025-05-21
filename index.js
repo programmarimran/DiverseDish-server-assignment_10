@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express')
 const app = express()
 const cors=require("cors")
@@ -24,19 +24,25 @@ async function run() {
    
     // Connect to the "sample_mflix" database and access its "movies" collection
     const database = client.db("diverseDishDB");
-    const productCollection = database.collection("products");
+    const productCollection = database.collection("recipes");
     const userCollection=database.collection("users")
 
-    app.get("/products",async(req,res)=>{
+    app.get("/recipes",async(req,res)=>{
         const cursor=productCollection.find()
         const result=await cursor.toArray()
         res.send(result)
     })
-    app.post("/products",async(req,res)=>{
+    app.get("/recipes/:id",async(req,res)=>{
+      const id=req.params.id;
+      const query={_id:new ObjectId(id)}
+      const result=await productCollection.findOne(query)
+      res.send(result)
+
+    })
+    app.post("/recipes",async(req,res)=>{
         const newProducts=req.body;
-        console.log(newProducts)
-        // const result= await productCollection.insertOne(newProducts)
-        // res.send(result)
+        const result= await productCollection.insertOne(newProducts)
+        res.send(result)
     })
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
