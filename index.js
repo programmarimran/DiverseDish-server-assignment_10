@@ -24,18 +24,18 @@ async function run() {
     // Connect to the "sample_mflix" database and access its "movies" collection
     const database = client.db("diverseDishDB");
     const productCollection = database.collection("recipes");
-    const userCollection = database.collection("users");
+    const WishlistCollection = database.collection("wishlist");
 
     app.get("/recipes", async (req, res) => {
       const cursor = productCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
-    app.get("/recipes/home",async(req,res)=>{
-      const topLikeData=productCollection.find().sort( { "likeCount": -1 } )
-      const result=(await topLikeData.toArray()).slice(0,6)
-      res.send(result)
-    })
+    app.get("/recipes/home", async (req, res) => {
+      const topLikeData = productCollection.find().sort({ likeCount: -1 });
+      const result = (await topLikeData.toArray()).slice(0, 6);
+      res.send(result);
+    });
     app.get("/recipes/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -73,16 +73,39 @@ async function run() {
       // console.log(likeCount)
       const filter = { _id: new ObjectId(id) };
       const updateDoc = {
-        $inc:{likeCount:1}
+        $inc: { likeCount: 1 },
       };
-      const result = await productCollection.updateOne(filter,updateDoc);
-      res.send(result)
+      const result = await productCollection.updateOne(filter, updateDoc);
+      res.send(result);
     });
     app.delete("/recipes/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await productCollection.deleteOne(query);
       res.send(result);
+    });
+
+    //*****************User wishlist Recipe api********************** */
+    app.post("/wishlist/recipes", async (req, res) => {
+      const newWishlist = req.body;
+      const recipeId = newWishlist.recipe._id;
+      const existing = await WishlistCollection.findOne({
+        "recipe._id": recipeId,
+      });
+
+      if (existing) {
+        return res.send({ message: "This recipe is already in the wishlist." });
+      } else {
+        const result = await WishlistCollection.insertOne(newWishlist);
+        res.send(result);
+      }
+    });
+    app.get("/wishlist/recipes", async (req, res) => {
+      const emailclient = req.query.email;
+       const query = { "wishlist_user.email": emailclient };
+    const result = await WishlistCollection.find(query).toArray();
+    
+    res.send(result);
     });
 
     // Send a ping to confirm a successful connection
