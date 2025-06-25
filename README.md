@@ -1,60 +1,68 @@
-# 🌐 Diverse Dish - Server Side (Express + MongoDB)
+# 🌐 Diverse Dish – Server Side (Express + MongoDB)
 
-This is the **backend/server-side** of the **Diverse Dish** project — a global recipe-sharing application. It is built using **Node.js**, **Express.js**, and **MongoDB**, and serves APIs to manage recipes, likes, and user wishlists.
+## 🔗 Relevant Links
 
-🔗 **Client Site (Live):** [diverse-dish-by-imran.web.app](https://diverse-dish-by-imran.web.app/)
-
----
-
-## 🚀 Features
-
-- 📦 Full CRUD operations for recipes
-- 💖 Like system (increment likes via `PATCH`)
-- 📝 Wishlist system for logged-in users
-- 📤 Insert single or multiple recipes
-- 🔐 Email-based filtering for wishlist
-- 🔁 Sort recipes by like count for homepage
+- 🌐 **Live Client Site:** [https://diverse-dish-by-imran.web.app/](https://diverse-dish-by-imran.web.app/)
+- 📦 **Server Repository:** [https://github.com/programmarimran/DiverseDish-server-assignment_10](https://github.com/programmarimran/DiverseDish-server-assignment_10)
+- 📦 **Client Repository:** [https://github.com/programmarimran/DiverseDish-client-assignment_10](https://github.com/programmarimran/DiverseDish-client-assignment_10)
 
 ---
 
-## 📁 API Endpoints
+## 📌 Project Overview
 
-### 📘 Recipes
-
-| Method | Endpoint               | Description                          |
-|--------|------------------------|--------------------------------------|
-| GET    | `/recipes`             | Get all recipes                      |
-| GET    | `/recipes/home`        | Get top 6 liked recipes              |
-| GET    | `/recipes/:id`         | Get a single recipe by ID            |
-| POST   | `/recipes`             | Add one or multiple new recipes      |
-| PUT    | `/recipes/:id`         | Update full recipe by ID             |
-| PATCH  | `/recipes/:id`         | Increment like count of a recipe     |
-| DELETE | `/recipes/:id`         | Delete a recipe by ID                |
-
-### 💖 Wishlist
-
-| Method | Endpoint                   | Description                          |
-|--------|----------------------------|--------------------------------------|
-| POST   | `/wishlist/recipes`        | Add a recipe to user’s wishlist      |
-| GET    | `/wishlist/recipes?email=` | Get all wishlist items by user email |
+**Diverse Dish** is the backend for a recipe-sharing platform where users can explore and manage global dishes. This Express.js-based server handles recipe CRUD operations, like increments, and wishlist management. It connects to a MongoDB database and ensures structured API communication with the frontend client.
 
 ---
 
-## ⚙️ Tech Stack
+## 📦 Features
 
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Database**: MongoDB (with MongoDB Atlas)
-- **CORS**: Enabled for frontend interaction
-- **Dotenv**: For secure environment variable handling
+- Full CRUD operations for recipes  
+- Like system (`PATCH` to increment likes)  
+- Wishlist management for logged-in users  
+- Filter wishlist by user email  
+- Sort recipes by likes for homepage  
+- Support for multiple recipe insertions  
 
 ---
 
-## 🔐 Environment Variables
+## 🛠 Tech Stack
 
-Create a `.env` file in the root directory and add your MongoDB credentials:
+| Category   | Tools           |
+|------------|------------------|
+| Backend    | Node.js, Express |
+| Database   | MongoDB (Atlas)  |
+| Security   | Dotenv, CORS     |
 
-```
+---
+
+## 🔗 API Endpoints
+
+### Recipes
+
+| Method | Endpoint         | Description                      |
+|--------|------------------|----------------------------------|
+| GET    | `/recipes`       | Get all recipes                  |
+| GET    | `/recipes/home`  | Get top 6 liked recipes          |
+| GET    | `/recipes/:id`   | Get recipe by ID                 |
+| POST   | `/recipes`       | Add single/multiple recipes      |
+| PUT    | `/recipes/:id`   | Update recipe by ID              |
+| PATCH  | `/recipes/:id`   | Increment like count             |
+| DELETE | `/recipes/:id`   | Delete recipe by ID              |
+
+### Wishlist
+
+| Method | Endpoint                     | Description                        |
+|--------|------------------------------|------------------------------------|
+| POST   | `/wishlist/recipes`          | Add a recipe to user's wishlist    |
+| GET    | `/wishlist/recipes?email=`   | Get wishlist by user email         |
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env` file in the root and add:
+
+```env
 DB_USER=your_mongodb_user
 DB_PASS=your_mongodb_password
 PORT=3000
@@ -62,63 +70,55 @@ PORT=3000
 
 ---
 
-## 📦 Installation & Run
+## 🛠️ Getting Started (Run Locally)
 
 ```bash
-# Clone the repo
-git clone https://github.com/your-username/diverse-dish-server.git
+# 1. Clone the repository
+git clone https://github.com/programmarimran/DiverseDish-server-assignment_10.git
+cd DiverseDish-server-assignment_10
 
-# Navigate into the project
-cd diverse-dish-server
-
-# Install dependencies
+# 2. Install dependencies
 npm install
 
-# Start the server
+# 3. Run the server
 node index.js
 ```
 
+*(For development, use:)*  
+```bash
+npm run dev
+```
+
 ---
 
-## 📂 Folder Structure
+## 📁 Folder Structure
 
 ```
 .
-├── index.js         # Main server file
-├── .env             # Environment variables (not committed)
-├── package.json     # Project dependencies
+├── index.js
+├── .env
+├── package.json
 ```
 
 ---
 
-## 🛡️ Security Notes
+## 👨‍💻 Developer Information
 
-- Ensure `.env` is listed in your `.gitignore`
-- Never expose your DB credentials publicly
-- Use production-level validation and rate-limiting in real deployment
-
----
-
-## 🙋‍♂️ Author
-
-- **Md Imran Hasan**
-- 🔗 [Live Client Site](https://diverse-dish-by-imran.web.app/)
-- 📫 Reach out via GitHub or your portfolio link
+| Detail         | Info                                          |
+|----------------|-----------------------------------------------|
+| 👨‍💻 Developer   | Md Imran Hasan                                |
+| 💼 Role         | MERN Stack Web Developer                       |
+| 📬 Email        | programmarimran@gmail.com                     |
+| 🌐 Portfolio    | Coming Soon                                   |
 
 ---
 
 ## 📄 License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
 ## 🤝 Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-```bash
-npm run dev # Recommended to use nodemon for development
-```
-
----
+Pull requests are welcome! For major changes, please open an issue first.
