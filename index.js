@@ -107,8 +107,8 @@ async function run() {
       }
     });
     app.get("/wishlist/recipes", async (req, res) => {
-      const emailclient = req.query.email;
-      const query = { "wishlist_user.email": emailclient };
+      const email = req.query.email;
+      const query = { "wishlist_user.email": email };
       const result = await WishlistCollection.find(query).toArray();
 
       res.send(result);
