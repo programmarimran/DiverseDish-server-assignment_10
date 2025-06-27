@@ -33,7 +33,13 @@ async function run() {
     });
     app.get("/recipes/home", async (req, res) => {
       const topLikeData = productCollection.find().sort({ likeCount: -1 });
-      const result = (await topLikeData.toArray()).slice(0, 6);
+      const result = (await topLikeData.toArray()).slice(0, 8);
+      res.send(result);
+    });
+    app.get("/my-recipes", async (req, res) => {
+      const email = req.query.email;
+      const query = { "user.email": email };
+      const result = await productCollection.find(query).toArray();
       res.send(result);
     });
     app.get("/recipes/:id", async (req, res) => {
@@ -102,10 +108,10 @@ async function run() {
     });
     app.get("/wishlist/recipes", async (req, res) => {
       const emailclient = req.query.email;
-       const query = { "wishlist_user.email": emailclient };
-    const result = await WishlistCollection.find(query).toArray();
-    
-    res.send(result);
+      const query = { "wishlist_user.email": emailclient };
+      const result = await WishlistCollection.find(query).toArray();
+
+      res.send(result);
     });
 
     // Send a ping to confirm a successful connection
